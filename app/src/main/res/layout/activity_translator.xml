@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:theme="@style/ThemeOverlay.Translatorclone.FullscreenContainer"
+    android:theme="@style/Theme.Translatorclone"
     tools:context=".activity.TranslatorActivity">
 
 
@@ -19,7 +19,9 @@
         android:layout_width="match_parent"
         android:id="@+id/cl_root"
         android:background="@color/background_0"
+
         android:layout_height="match_parent">
+
 
         <TextView
             android:id="@+id/tv_result"
@@ -28,38 +30,47 @@
             android:textColor="@color/background_1"
             android:layout_marginStart="19dp"
             android:textSize="40sp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat"
+            android:text="@{viewmodel.resultText}"
+            app:layout_constraintBottom_toTopOf="@+id/ll_top"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="번역입니다" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat"
+            android:id="@+id/ll_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="120dp"
             android:background="@drawable/bg_white_round_bottom"
             android:gravity="center"
+            android:minHeight="120dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <EditText
+            <edu.skku.cs.translatorclone.customview.ClearEditText
 
                 android:id="@+id/et_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
                 android:layout_marginStart="19dp"
                 android:background="@null"
                 android:hint="@string/str_input_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:textColor="@color/text_1"
-                android:layout_marginVertical="16dp"
                 android:textSize="32sp"
                 tools:text="Apple" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:visibility="@{viewmodel.etOnFocus ? View.GONE : View.VISIBLE}"
+                android:id="@+id/rv_history"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:id="@+id/rv_history"/>
+                android:visibility="@{viewmodel.etOnFocus ? View.GONE : View.VISIBLE}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
+        <WebView
+            android:id="@+id/v_web"
+            android:layout_width="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="1dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

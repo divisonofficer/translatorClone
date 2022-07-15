@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.skku.cs.translatorclone">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,9 +13,10 @@
         android:supportsRtl="true"
         android:name=".global.Application"
         android:theme="@style/Theme.Translatorclone">
+
         <activity
             android:name=".activity.TranslatorActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Translatorclone.Fullscreen">

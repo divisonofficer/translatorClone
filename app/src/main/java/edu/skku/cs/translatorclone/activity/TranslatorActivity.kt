@@ -1,13 +1,21 @@
 package edu.skku.cs.translatorclone.activity
 
 import android.content.res.Resources
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.webkit.*
 import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import edu.skku.cs.translatorclone.R
+import edu.skku.cs.translatorclone.customview.ClearEditText
 import edu.skku.cs.translatorclone.databinding.ActivityTranslatorBinding
 import edu.skku.cs.translatorclone.viewmodel.TranslatorViewModel
+import org.jsoup.Jsoup
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 
 /**
@@ -21,13 +29,15 @@ class TranslatorActivity : BaseActivity<ActivityTranslatorBinding>(R.layout.acti
 
     override fun viewStart() {
 
-
         bind{
+
+            setWebview()
+
 
             lifecycleOwner = this@TranslatorActivity
             viewmodel = viewModel
 
-            setKeyListener(root)
+            //setKeyListener(root)
             setInputFocus(etInput)
 
             clRoot.setOnClickListener {
@@ -44,9 +54,61 @@ class TranslatorActivity : BaseActivity<ActivityTranslatorBinding>(R.layout.acti
 
 
 
-    private fun setInputFocus(input : EditText)
+    private fun setWebview(){
+
+        bind {
+            vWeb.settings.apply{
+                javaScriptEnabled = true
+
+
+            }
+
+            vWeb.webViewClient = object : WebViewClient(){
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    Log.d("WEBVIEW   ", "URL : $url")
+                    view?.postDelayed({
+
+                        view.loadUrl("javascript:window.Android.parseHtml(document.getElementsByTagName('html')[0].innerHTML);")
+                    },500)
+
+                }
+
+
+            }
+            vWeb.webChromeClient = object : WebChromeClient(){
+
+                override fun onPermissionRequest(request: PermissionRequest?) {
+                    request?.run {
+                        grant(resources)
+                    }
+                }
+            }
+
+            vWeb.addJavascriptInterface(Js(),"Android")
+        }
+    }
+
+
+
+
+    private fun setInputFocus(input : ClearEditText)
     {
         input.apply{
+            setOnHideListener{
+                postDelayed({
+                    viewModel.setEtFocus(false)
+                },50)
+
+            }
+
+            addTextChangedListener {
+                viewModel.requestTranslate(it.toString())
+
+                bind {
+                    vWeb.loadUrl("https://translate.google.com/?sl=en&tl=ko&text=${it.toString()}&op=translate")
+                }
+            }
 
             setOnFocusChangeListener { view, focus ->
                 if(focus)
@@ -69,22 +131,6 @@ class TranslatorActivity : BaseActivity<ActivityTranslatorBinding>(R.layout.acti
         }
     }
 
-    private fun onKeyboardHide(){
-        bind {
-            if(etInput.hasFocus())
-            {
-                etInput.clearFocus()
-            }
-            root.postDelayed ({
-                viewModel.setEtFocus(false)
-            },10)
-        }
-
-    }
-
-    private fun onKeyboardShow(){
-        viewModel.setEtFocus(true)
-    }
 
 
     private var oldHeight = -1
@@ -105,37 +151,24 @@ class TranslatorActivity : BaseActivity<ActivityTranslatorBinding>(R.layout.acti
     }
 
 
-    private fun setKeyListener(root : View)
-    {
-        root.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
-            Log.d(javaClass.name,"Height : ${view.height} / ${Resources.getSystem().displayMetrics.heightPixels}")
-            if(view.height >= Resources.getSystem().displayMetrics.heightPixels * 0.8)
+
+    inner class Js{
+
+        @JavascriptInterface
+        fun parseHtml(html : String)
+        {
+            try {
+                Jsoup.parse(html).select("span[class=\"Q4iAWc\"]").text().apply {
+                    if(isNotEmpty())
+                        viewModel.setResultText(this)
+                }
+            }
+            catch (e:Exception)
             {
-                if(oldHeight < 0)
-                {
-                    oldHeight = view.height
-
-                }
-                else if(oldHeight == view.height) {
-
-                }
-                else {
-                    Log.d(javaClass.name, "HIDDEN")
-                    onKeyboardHide()
-                }
+                e.printStackTrace()
             }
-            else if(oldHeight > 0 && oldHeight != view.height){
-                onKeyboardShow()
-            }
-
-
-
-            oldHeight = view.height
         }
     }
-
-
-
 
 
 }

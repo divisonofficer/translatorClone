@@ -55,7 +55,12 @@ dependencies {
 
 
     // Coroutine
-    var coroutine = "1.6.0"
+    var coroutine = "1.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine"
+
+
+    //Jsoup
+
+    implementation "org.jsoup:jsoup:1.15.2"
 }
