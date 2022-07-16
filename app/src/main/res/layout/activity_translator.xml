@@ -44,27 +44,53 @@
             android:minHeight="120dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent">
-
-            <edu.skku.cs.translatorclone.customview.ClearEditText
-
-                android:id="@+id/et_input"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_marginVertical="16dp"
                 android:layout_marginStart="19dp"
-                android:background="@null"
-                android:hint="@string/str_input_hint"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:textColor="@color/text_1"
-                android:textSize="32sp"
-                tools:text="Apple" />
+                android:orientation="horizontal">
+                <edu.skku.cs.translatorclone.customview.ClearEditText
+
+                    android:id="@+id/et_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@null"
+                    android:hint="@string/str_input_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:textColor="@color/text_1"
+                    android:textSize="32sp"
+                    android:layout_weight="1"
+                    tools:text="Apple" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_bookmark"
+                        app:tint="@color/background_holder" />
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_bookmark"
+                     />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_history"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:visibility="@{viewmodel.etOnFocus ? View.GONE : View.VISIBLE}" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
         <WebView
             android:id="@+id/v_web"

@@ -18,4 +18,6 @@
     <color name="background_1">#FFFFFF</color>
 
     <color name="text_1">#6E7A87</color>
+
+    <color name="background_holder">#E5E7EA</color>
 </resources>
