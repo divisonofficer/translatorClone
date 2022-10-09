@@ -8,6 +8,9 @@
 
     <data>
         <variable
+            name="activity"
+            type="edu.skku.cs.translatorclone.activity.TranslatorActivity" />
+        <variable
             name="viewmodel"
             type="edu.skku.cs.translatorclone.viewmodel.TranslatorViewModel" />
         <import type="android.view.View"/>
@@ -56,15 +59,19 @@
                     android:id="@+id/et_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:text="@{viewmodel.inputText}"
+                    android:onTextChanged="@{(text,a,b,c)->viewmodel.requestTranslate(text.toString())}"
+                    onHide="@{()->activity.requestClearFocus()}"
                     android:background="@null"
+                    android:textColorHint="@color/black_overlay"
                     android:hint="@string/str_input_hint"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textColor="@color/text_1"
                     android:textSize="32sp"
                     android:layout_weight="1"
-                    tools:text="Apple" />
+                    tools:text="Apple"
+                    />
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_marginEnd="24dp"
@@ -89,6 +96,7 @@
                 android:id="@+id/rv_history"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+
                 android:visibility="@{viewmodel.etOnFocus ? View.GONE : View.VISIBLE}" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
