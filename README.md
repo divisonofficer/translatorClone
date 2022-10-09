@@ -14,4 +14,6 @@ Jsoup 을 이용한 웹뷰 크롤링
 
 EditText 와 키보드 열고 닫침을 부드럽게 처리할 수 있는 환경
 
-Room을 
+Hilt 공부
+
+Databinding을 극한으로 굴려보자
