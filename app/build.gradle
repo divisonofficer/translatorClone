@@ -3,9 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 
 }
-
 apply plugin: 'kotlin-kapt'
-
+apply plugin: 'dagger.hilt.android.plugin'
 android {
     compileSdk 32
 
@@ -47,6 +46,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
 }
 
 dependencies {
@@ -65,15 +65,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-
-    // Koin
-
-    var koinVersion = "3.1.5"
-    implementation "io.insert-koin:koin-core:$koinVersion"
-    implementation "io.insert-koin:koin-android:$koinVersion"
-    testImplementation "io.insert-koin:koin-test:$koinVersion"
-    testImplementation "io.insert-koin:koin-test-junit4:$koinVersion"
-
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.38.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
 
     // Coroutine
     var coroutine = "1.6.1"
@@ -95,4 +89,8 @@ dependencies {
 
         // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
+}
+
+kapt {
+    correctErrorTypes = true
 }

@@ -9,4 +9,9 @@ import edu.skku.cs.translatorclone.room.data.Translate
 abstract class RoomDB : RoomDatabase(){
 
     abstract val dao : RoomDao
+
+
+    companion object{
+        const val DB_NAME = "translator_db.db"
+    }
 }

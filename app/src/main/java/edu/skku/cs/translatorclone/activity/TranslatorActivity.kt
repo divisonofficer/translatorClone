@@ -1,23 +1,26 @@
 package edu.skku.cs.translatorclone.activity
 
-import android.util.Log
+
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import edu.skku.cs.translatorclone.R
 import edu.skku.cs.translatorclone.customview.ClearEditText
 import edu.skku.cs.translatorclone.databinding.ActivityTranslatorBinding
 import edu.skku.cs.translatorclone.viewmodel.TranslatorViewModel
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+@AndroidEntryPoint
 class TranslatorActivity : BaseActivity<ActivityTranslatorBinding>(R.layout.activity_translator) {
 
 
-    private val viewModel: TranslatorViewModel by viewModel()
+    private val viewModel: TranslatorViewModel by viewModels()
 
     override fun viewStart() {
 

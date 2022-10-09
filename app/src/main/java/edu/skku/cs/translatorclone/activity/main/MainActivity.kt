@@ -8,6 +8,7 @@ import android.view.WindowInsets
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -35,12 +36,12 @@ import androidx.compose.ui.unit.sp
 import edu.skku.cs.translatorclone.activity.ui.theme.Background10
 import edu.skku.cs.translatorclone.activity.ui.theme.TranslatorcloneTheme
 import edu.skku.cs.translatorclone.viewmodel.TranslatorViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 @ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModel<TranslatorViewModel>()
+    private val viewModel by viewModels<TranslatorViewModel>()
 
 
 

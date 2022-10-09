@@ -3,12 +3,15 @@ package edu.skku.cs.translatorclone.viewmodel
 
 import android.util.Log
 import android.webkit.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.jsoup.Jsoup
+import javax.inject.Inject
 
 
-class TranslatorViewModel : BaseViewModel() {
+@HiltViewModel
+class TranslatorViewModel @Inject constructor(): BaseViewModel() {
 
     private val _etOnFocus = MutableStateFlow(false)
     val etOnFocus : StateFlow<Boolean> get() = _etOnFocus
